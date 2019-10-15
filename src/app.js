@@ -5,6 +5,7 @@ import logger from 'morgan';
 
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
+import sessionsRouter from './routes/sessions';
 
 import './database';
 
@@ -32,6 +33,7 @@ class App {
   routes() {
     this.server.use('/', indexRouter);
     this.server.use('/users', usersRouter);
+    this.server.use('/sessions', sessionsRouter);
   }
 }
 
