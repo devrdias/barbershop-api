@@ -10,6 +10,7 @@ import filesRouter from './routes/files';
 import providersRouter from './routes/providers';
 import appointmentsRouter from './routes/appointments';
 import schedulesRouter from './routes/schedules';
+import notificationsRouter from './routes/notifications';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -49,6 +50,7 @@ class App {
     this.server.use('/providers', providersRouter);
     this.server.use('/appointments', appointmentsRouter);
     this.server.use('/schedules', schedulesRouter);
+    this.server.use('/notifications', notificationsRouter);
   }
 }
 

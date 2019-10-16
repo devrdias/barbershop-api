@@ -49,13 +49,21 @@ class AppointmentController {
     /**
      * Check if provider_id is a provider
      */
-    const isProvider = await User.findOne({
+    const { provider } = await User.findOne({
       where: { id: provider_id, provider: true },
     });
-    if (!isProvider) {
+    if (!provider) {
       return res
         .status(401)
         .json({ error: 'You need a valid Provider to create an appointment.' });
+    }
+    /**
+     * Check if appointment is not created by same user
+     */
+    if (provider_id === req.userId) {
+      return res
+        .status(401)
+        .json({ error: 'You cant create an appointment for yourself' });
     }
     /**
      * Check for past dates
