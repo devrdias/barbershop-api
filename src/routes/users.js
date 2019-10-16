@@ -7,7 +7,7 @@ const router = new Router();
 /* POST users listing = store action method */
 router.post('/', UserController.store);
 
-// global middleware
+// authenticated routes
 router.use(authMiddleware);
 router.put('/', UserController.update);
 
