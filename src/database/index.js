@@ -7,6 +7,7 @@ const models = [User];
 
 class Database {
   constructor() {
+    console.log('Sequelize - connecting to DB');
     this.init();
   }
 

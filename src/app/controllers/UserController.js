@@ -52,7 +52,7 @@ class UserController {
           oldPassword ? field.required() : field
         ),
       confirmPassword: Yup.string().when('password', (password, field) =>
-        password ? field.required() : field
+        password ? field.required().oneOf([Yup.ref('password')]) : field
       ),
     });
 
@@ -65,16 +65,14 @@ class UserController {
 
     // check if email is already registered by other user
     if (email !== user.email) {
-      const userExists = await User.findOne({
-        where: { email: req.body.email },
-      });
+      const userExists = await User.findOne({ where: { email } });
       if (userExists) {
         return res.status(400).json({ error: 'Email already in use' });
       }
     }
     // check if old password match
     if (oldPassword && !(await user.checkPassword(oldPassword))) {
-      return res.status(401).json({ error: 'Email already in use' });
+      return res.status(401).json({ error: 'Password does not match ' });
     }
 
     const { id, name, provider } = await user.update(req.body);

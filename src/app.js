@@ -6,7 +6,9 @@ import logger from 'morgan';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 import sessionsRouter from './routes/sessions';
+import filesRouter from './routes/files';
 
+// open db connection
 import './database';
 
 class App {
@@ -34,6 +36,7 @@ class App {
     this.server.use('/', indexRouter);
     this.server.use('/users', usersRouter);
     this.server.use('/sessions', sessionsRouter);
+    this.server.use('/files', filesRouter);
   }
 }
 

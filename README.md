@@ -24,6 +24,8 @@ yarn sequelize db:migrate
 ```
 * Undo Migrations
 ```bash
-yarn sequelize db:migrate:undo //last migrated file
-yarn sequelize db:migrate:undo:all //all migrations
+# last migrated file
+yarn sequelize db:migrate:undo
+# all migrations
+yarn sequelize db:migrate:undo:all
 ```
