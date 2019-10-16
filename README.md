@@ -1,8 +1,11 @@
 # barbershop-api
 Node/Express API to integrate with a Barber Shop
 
-* Back-end Node.js + Express + Postgres (Sequelize)
-* Front-end React & React Native
+* Node.js Back-end + Express [] + Postgres (Sequelize) []
+* JWT Authentication using jsonwebtoken []
+* Schema validation using Yup []
+* Password encryption using bcrypt []
+* Front-end React & React Native []
 
 Features
 * Use eslint/prettier last version to integrate with VSCode (fix issue with Eslint 6+ and Prettier)

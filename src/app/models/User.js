@@ -1,16 +1,13 @@
 import Sequelize, { Model } from 'sequelize';
 import bcrypt from 'bcryptjs';
 
-/**
- * Define only regular columns, no primary key neither generated values
- */
 class User extends Model {
   static init(sequelize) {
     super.init(
       {
         name: Sequelize.STRING,
         email: Sequelize.STRING,
-        password: Sequelize.VIRTUAL, // only exists at the code, not at DB
+        password: Sequelize.VIRTUAL, // wont be persisted
         password_hash: Sequelize.STRING,
         provider: Sequelize.BOOLEAN,
       },
@@ -21,7 +18,8 @@ class User extends Model {
 
     this.addHook('beforeSave', async user => {
       if (user.password) {
-        user.password_hash = await bcrypt.hash(user.password, 8);
+        const encryptionLevel = 8;
+        user.password_hash = await bcrypt.hash(user.password, encryptionLevel);
       }
     });
 
