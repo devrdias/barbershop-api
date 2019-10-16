@@ -8,6 +8,8 @@ import usersRouter from './routes/users';
 import sessionsRouter from './routes/sessions';
 import filesRouter from './routes/files';
 import providersRouter from './routes/providers';
+import appointmentsRouter from './routes/appointments';
+
 import authMiddleware from './app/middlewares/auth';
 
 // open db connection
@@ -44,6 +46,7 @@ class App {
     this.server.use('/sessions', sessionsRouter);
     this.server.use('/files', filesRouter);
     this.server.use('/providers', providersRouter);
+    this.server.use('/appointments', appointmentsRouter);
   }
 }
 
