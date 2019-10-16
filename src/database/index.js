@@ -1,13 +1,14 @@
 import Sequelize from 'sequelize';
 import databaseConfig from '../config/database';
 
+// models
 import User from '../app/models/User';
+import File from '../app/models/File';
 
-const models = [User];
+const models = [User, File];
 
 class Database {
   constructor() {
-    console.log('Sequelize - connecting to DB');
     this.init();
   }
 
@@ -15,7 +16,10 @@ class Database {
     this.connection = new Sequelize(databaseConfig);
 
     // call init for every model passing the connection as parameter
-    models.map(model => model.init(this.connection));
+    // call associate for every model passing the connection as parameter
+    models
+      .map(model => model.init(this.connection))
+      .map(model => model.associate && model.associate(this.connection.models));
   }
 }
 
