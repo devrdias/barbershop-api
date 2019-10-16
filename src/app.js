@@ -9,6 +9,7 @@ import sessionsRouter from './routes/sessions';
 import filesRouter from './routes/files';
 import providersRouter from './routes/providers';
 import appointmentsRouter from './routes/appointments';
+import schedulesRouter from './routes/schedules';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -40,13 +41,14 @@ class App {
   routes() {
     this.server.use('/', indexRouter);
     this.server.use('/users', usersRouter);
+    this.server.use('/sessions', sessionsRouter);
 
     // authenticated routes
     this.server.use(authMiddleware);
-    this.server.use('/sessions', sessionsRouter);
     this.server.use('/files', filesRouter);
     this.server.use('/providers', providersRouter);
     this.server.use('/appointments', appointmentsRouter);
+    this.server.use('/schedules', schedulesRouter);
   }
 }
 
