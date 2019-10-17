@@ -3,6 +3,7 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import * as Sentry from '@sentry/node';
+import Youch from 'youch';
 import sentryConfig from './config/sentry';
 
 // capture async errors from express
@@ -27,11 +28,14 @@ class App {
     // create server
     this.server = express();
 
+    // initiate sentry error monitoring
     Sentry.init(sentryConfig);
 
     // load middlewares and routes
     this.middlewares();
     this.routes();
+    // customer error handler to return error to client
+    this.exceptionHandler();
   }
 
   middlewares() {
@@ -50,6 +54,7 @@ class App {
   }
 
   routes() {
+    // unprotected routes
     this.server.use('/', indexRouter);
     this.server.use('/users', usersRouter);
     this.server.use('/sessions', sessionsRouter);
@@ -64,6 +69,13 @@ class App {
 
     // The error handler must be before any other error middleware and after all controllers
     this.server.use(Sentry.Handlers.errorHandler());
+  }
+
+  exceptionHandler() {
+    this.server.use(async (err, req, res, next) => {
+      const error = await new Youch(err, req).toJSON();
+      return res.status(500).json(error);
+    });
   }
 }
 
