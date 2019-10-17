@@ -8,6 +8,8 @@ Node/Express API to integrate with a Barber Shop
 * Background jobs using queues - be-queue []
 * Server side mails using nodemailer []
 * Email templates using handlebars []
+* Use https://mailtrap.io to send emails on Development environment
+* Use Sentry as bug tracker/monigoring []
 
 Databases
 * postgres (sequelize) for Authentication

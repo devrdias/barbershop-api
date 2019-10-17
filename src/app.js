@@ -2,6 +2,11 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import * as Sentry from '@sentry/node';
+import sentryConfig from './config/sentry';
+
+// capture async errors from express
+import 'express-async-errors';
 
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
@@ -22,12 +27,17 @@ class App {
     // create server
     this.server = express();
 
+    Sentry.init(sentryConfig);
+
     // load middlewares and routes
     this.middlewares();
     this.routes();
   }
 
   middlewares() {
+    // The request handler must be the first middleware on the app
+    this.server.use(Sentry.Handlers.requestHandler());
+
     this.server.use(express.json());
     this.server.use(logger('dev'));
     this.server.use(express.urlencoded({ extended: false }));
@@ -51,6 +61,9 @@ class App {
     this.server.use('/appointments', appointmentsRouter);
     this.server.use('/schedules', schedulesRouter);
     this.server.use('/notifications', notificationsRouter);
+
+    // The error handler must be before any other error middleware and after all controllers
+    this.server.use(Sentry.Handlers.errorHandler());
   }
 }
 
