@@ -11,6 +11,7 @@ Node/Express API to integrate with a Barber Shop
 * Use https://mailtrap.io to send emails on Development environment
 * Use Sentry as bug tracker/monitoring []
 * Custom error handler middleware with styled errors using Youch []
+* .env variables using dotenv []
 
 Databases
 * postgres (sequelize) for Authentication
