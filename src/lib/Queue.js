@@ -30,8 +30,24 @@ class Queue {
     jobs.forEach(job => {
       const { bee, handle } = this.queues[job.key];
 
-      bee.process(handle);
+      bee
+        .on('failed', this.handleFailure)
+        .on('succeeded', this.handleSucceeded)
+        .on('ready', this.handleReady)
+        .process(handle);
     });
+  }
+
+  handleFailure(job, error) {
+    console.log(`Queue ${job.queue.name}: FAILED`, error.message);
+  }
+
+  handleSucceeded(job, result) {
+    console.log(`Job ${job.queue.name} succeeded with result: ${result}`);
+  }
+
+  handleReady() {
+    console.log('Queue now ready to start doing things');
   }
 }
 
