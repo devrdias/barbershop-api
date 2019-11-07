@@ -19,11 +19,14 @@ class SessionController {
     const { email, password } = req.body;
 
     const user = await User.findOne({
-      where: { email }, include: [{
-        mode: File,
-        as: 'avatar',
-        attributes: ['id', 'path', 'url']
-      }]
+      where: { email },
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['id', 'path', 'url'],
+        },
+      ],
     });
 
     if (!user) {
@@ -47,7 +50,7 @@ class SessionController {
         name,
         email,
         avatar,
-        provider
+        provider,
       },
       token,
     });
