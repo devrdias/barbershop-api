@@ -39,7 +39,6 @@ class AppointmentController {
   }
 
   async store(req, res) {
-    console.debug(req.body);
     const schema = Yup.object().shape({
       provider_id: Yup.number().required(),
       date: Yup.date().required(),

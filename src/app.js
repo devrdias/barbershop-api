@@ -2,6 +2,7 @@ import 'dotenv/config';
 
 import express from 'express';
 import path from 'path';
+import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import * as Sentry from '@sentry/node';
@@ -36,7 +37,7 @@ class App {
     // load middlewares and routes
     this.middlewares();
     this.routes();
-    // customer error handler to return error to client
+    // custom error handler to return error to client
     this.exceptionHandler();
   }
 
@@ -44,6 +45,7 @@ class App {
     // The request handler must be the first middleware on the app
     this.server.use(Sentry.Handlers.requestHandler());
 
+    this.server.use(cors());
     this.server.use(express.json());
     this.server.use(logger('dev'));
     this.server.use(express.urlencoded({ extended: false }));

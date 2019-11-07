@@ -16,6 +16,19 @@ class Queue {
       this.queues[key] = {
         bee: new Bee(key, {
           redis: redisConfig,
+          prefix: 'bq',
+          stallInterval: 5000,
+          nearTermWindow: 1200000,
+          delayedDebounce: 1000,
+          isWorker: true,
+          getEvents: true,
+          sendEvents: true,
+          storeJobs: true,
+          ensureScripts: true,
+          activateDelayedJobs: false,
+          removeOnSuccess: false,
+          removeOnFailure: false,
+          redisScanCount: 100,
         }),
         handle,
       };
